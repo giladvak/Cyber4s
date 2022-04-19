@@ -1,0 +1,382 @@
+html {
+    font-family: sans-serif;
+}
+.head{
+    
+}
+
+.searchbar {
+    position: relative;
+    top: 3vh;
+    width: 65%;
+    left: 65%;
+
+}
+
+.img {
+    position: absolute;
+    right: 5px;
+    top: 3vh;
+
+}
+
+.img2 {
+    position: absolute;
+    right: 10%;
+    width: 60px;
+    height: 60;
+}
+
+
+.search {
+    position: absolute;
+    display: inline-block;
+    width: 30%;
+    height: 25px;
+    z-index: 1;
+
+
+
+
+}
+
+.floatbutton {
+
+    position: absolute;
+    
+    top: 30px;
+    right: 32%;
+    height: 25px;
+    width: 50px;
+    border: 2px solid black;
+    border-radius: 12%;
+
+}
+
+.floatbutton:hover {
+    z-index: 3;
+}
+
+.searchbutton {
+    height: 20px;
+    width: 20px;
+
+} 
+
+
+
+
+.uppernav {
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+.uppernav a {
+    background-color: rgba(220, 223, 232, 0.5);
+    border: 1px solid gray;
+    border-top: none;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+
+    border-radius: 2px;
+
+}
+
+.uppernav a:hover {
+    color: white;
+
+}
+
+
+.eggplant {
+    position: relative;
+    margin-right: 195px;
+
+
+
+}
+
+
+
+h1 {
+    position: relative;
+    left: 90%;
+    ;
+}
+
+.aside {
+    width: 250px;
+    float: left;
+    position: absolute;
+    top: 30vh;
+
+    padding: 0;
+    border: 2px solid black;
+    height: 500px;
+    background-color: rgb(223, 231, 251);
+}
+
+.p2 {
+    text-align: center;
+    background-color: rgb(105, 181, 105);
+}
+
+table {
+    border-spacing: 40px 5px;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+.p {
+    position: absolute;
+    right: 0;
+    width: 70%;
+}
+
+.p1 {
+    text-align: center;
+}
+
+#img3 {
+    position: relative;
+    left: 200px;
+    bottom: 45px;
+    width: 30px;
+
+
+}
+
+.hoverimages {
+    border-radius: 10px;
+}
+
+.tooltip .hoverpicture {
+    visibility: hidden;
+    position: absolute;
+
+
+
+}
+
+.tooltip:hover .hoverpicture {
+    visibility: visible;
+}
+
+.aside2 {
+    display: inline-block;
+    width: 200px;
+    height: 90vh;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 0%;
+    border-left: 1px solid rgb(194, 194, 232);
+    font-size: 12px;
+
+}
+
+
+.tip {
+    position: relative;
+    margin-top: 60px;
+    font-size: 1rem;
+
+
+}
+
+.h2 {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+}
+
+.eggs {
+    width: 250px;
+    height: 250px;
+    border: 1px solid black;
+    position: relative;
+    top: 20px;
+    background-color: rgb(223, 231, 251);
+
+}
+
+.eggs.eggs1 {
+    margin-bottom: 30px;
+}
+
+.inner {
+    margin: 5px;
+    height: 200px;
+
+    border: 1px solid black;
+}
+
+.dohan {
+    position: absolute;
+    right: 2px;
+    bottom: 5px;
+    font-size: 15px;
+}
+
+.table2 {
+    border: 1px solid grey;
+    height: 220px;
+    text-align: center;
+}
+
+.ereh {
+    font-size: calc(100% - 2px);
+}
+
+.table2head {
+    border: 1px solid grey;
+    background-color: rgb(248, 246, 145);
+    margin: 0;
+    padding: 0;
+}
+
+.navarticle {
+    display: table;
+    position: absolute;
+    border: 1px solid rgba(25, 25, 26, 0.5);
+    width: 150px;
+    height: 200px;
+    right: 2vw;
+    margin-top: 90px;
+    padding: 7px;
+    background-color: rgba(220, 223, 232, 0.5);
+    
+    
+
+
+}
+
+.navarticle p {
+    text-align: right;
+    margin: 10px;
+
+    
+    
+
+    
+    
+
+}
+.navarticle li{
+    width: max-content;
+}
+
+.displaynone {
+    display: inline;
+    position: relative;
+    left: 12px;
+
+    text-align: right;
+
+
+    padding: 0;
+}
+
+.article2 {
+    margin: 400px 0;
+    margin-bottom: 10%;
+    position: relative;
+
+
+}
+
+.article2 h2 {
+    text-align: right;
+    margin-right: 40px;
+
+
+}
+
+.article2 hr {
+    position: relative;
+    width: 80%;
+    left: 10%;
+
+
+}
+
+.article3 {
+    margin-top: 100px;
+   
+    top: 0;
+
+}
+
+.article3 h2 {
+    text-align: right;
+    margin-right: 40px;
+
+
+}
+
+.article3 hr {
+    position: relative;
+    width: 80%;
+    left: 10%;
+
+
+
+}
+
+.article4 {
+    margin-top: 100px;
+    
+
+
+
+
+}
+
+.article4 h2 {
+    text-align: right;
+    margin-right: 40px;
+
+
+}
+
+.article4 hr {
+    position: relative;
+    width: 80%;
+    left: 10%;
+}
+
+.sof {
+    position: absolute;
+    right: 300px;
+    text-align: center;
+    margin: 200px;
+    margin-top: 250px;
+    width: 200px;
+}
+
+@media all and (max-width:800px) {
+    article {
+        display: none;
+    }
+}
+
+summary{
+    font-size: 15px;
+    color: blue;
+    margin-right: 100px;
+    
+   
+}
+details{
+    position: relative;
+    bottom: 25px;
+}
+
