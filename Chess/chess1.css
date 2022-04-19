@@ -53,6 +53,9 @@ td{
 .white.selected {
     background:rgba(87, 39, 79, 0.668)
 }
+.possibleMoves{
+    background:violet ;
+}
 
 
   
