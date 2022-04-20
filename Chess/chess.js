@@ -2,7 +2,7 @@ let typeBlack = 'black'
 let typeWhite = 'white'
 let selectedCell;
 let pieces = [];
-
+let table;
 
 const PAWN = 'pawn';
 const ROOK = 'rook';
@@ -10,7 +10,6 @@ const KNIGHT = 'knight';
 const BISHOP = 'bishop';
 const KING = 'king';
 const QUEEN = 'queen';
-
 
 
 
@@ -25,8 +24,10 @@ class Piece {
 
     getPossibleMoves() {
         let relativeMoves;
+     
         if (this.type === PAWN) {
-            let relativeMoves = this.pawnPossibleMoves()
+             relativeMoves = this.pawnPossibleMoves()
+             
         } else if (this.type === ROOK) {
             relativeMoves = this.rookPossibleMoves()
         } else if (this.type === KNIGHT) {
@@ -40,12 +41,12 @@ class Piece {
         } else{ console.log('Unknown type')
     };
     let absoluteMoves = [];
-    for (let relativeMoves of relativeMoves) {
-      const absoluteRow = this.row + relativeMoves[0];
-      const absoluteCol = this.col + relativeMoves[1];
+    for (let relativeMove of relativeMoves) {
+      const absoluteRow = this.row + relativeMove[0];
+      const absoluteCol = this.col + relativeMove[1];
       absoluteMoves.push([absoluteRow, absoluteCol]);
-    };
-    console.log(absoluteMoves)
+     
+    }; 
     let filteredMoves = [];
     for (let absoluteMove of absoluteMoves) {
       const absoluteRow = absoluteMove[0];
@@ -55,11 +56,12 @@ class Piece {
       }
     }
     return filteredMoves;
-    }
-
+    }; 
+   
      pawnPossibleMoves() {
     
     return [[1, 0]];
+   
   }
 
  rookPossibleMoves() {
@@ -72,19 +74,64 @@ class Piece {
     }
     return result;
   }
-  knightpossibleMoves() {
+  knightPossibleMoves() {
     
     return [[1, 0]];
   }
  
 
-        
     
-      
-       
 
     };
+    // class BoardData{
+    //     constructor(pieces){
+    //         this.pieces=pieces
+    //     }
+        // getPiece(i,j){
+        //     for (const piece of this.pieces){
+        //         if (this.row===i&&this.col===j)
+        //         return piece
+        //     }
+        // }
+    // }
+    // const boardData=new BoardData(getInitialBoard());
+    
 
+
+    function onClickFunc(e,row,col,cell) { //defining func setting parameters
+                  
+        for (let x = 0; x < 8; x++) {
+            for (let y = 0; y < 8; y++) {
+              table.rows[x].cells[y].classList.remove('possibleMoves');
+            }
+          }
+          
+
+    //     console.log(e.currentTarget);
+    //   console.log(row,col)
+
+
+        let chosenPiece;
+        for (let hatha of pieces) {
+            if (row === hatha.row && col === hatha.col) {
+                chosenPiece = hatha
+            }
+        };
+        if (chosenPiece){
+
+       
+        let possibleMoves = chosenPiece.getPossibleMoves();
+              for (let possibleMove of possibleMoves)
+              table.rows[possibleMove[0]].cells[possibleMove[1]].classList.add('possibleMoves');
+        console.log(chosenPiece)}
+
+        if (selectedCell) {
+            selectedCell.classList.remove('selected')
+        }
+
+        selectedCell = e.currentTarget;
+        cell.classList.add('selected')
+    };
   
 
 
@@ -109,9 +156,8 @@ function getInitialBoard(x, type, c) {
 
     }
     return result;
-
+   
 }
-
 
 
 
@@ -130,7 +176,7 @@ function createBoard() {
     const div = document.createElement('div');
     document.body.appendChild(div);
     div.className = 'outerBox'
-    const table = document.createElement('table');
+     table = document.createElement('table');
     div.appendChild(table);
     table.classList.add('board');
 
@@ -154,39 +200,13 @@ function createBoard() {
                 cell.classList.add('black');
 
             }
+            
 
-
-            function onClickFunc(e) {
-                  
-
-
-                console.log(e.currentTarget);
-                console.log(i, j)
-
-
-
-
-                if (selectedCell !== undefined) {
-                    selectedCell.classList.remove('selected')
-                }
-
-                selectedCell = e.currentTarget;
-                cell.classList.add('selected')
-
-
-                let chosenPiece;
-                for (piece of pieces) {
-                    if (i === piece.row && j === piece.col) {
-                        chosenPiece = piece
-
-                    }
-
-
-
-                }
-                console.log(chosenPiece)
-            }
-            cell.addEventListener('click', onClickFunc);
+              //event explenation
+            //  function clickH(e){
+            //     onClickFunc(e,i,j,cell,table)
+            //  }
+            cell.addEventListener('click',(e)=> onClickFunc(e,i,j,cell)); //calling function insert values
 
 
 

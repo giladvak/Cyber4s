@@ -23,6 +23,7 @@ tr{
     align-items: center;
 }
 td{
+    border: 1px solid rgba(39, 74, 87, 0.668);
     width: 12.5%;
     height: 100%;
     display: flex;
