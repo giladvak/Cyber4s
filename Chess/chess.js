@@ -26,7 +26,7 @@ class Piece {
     getPossibleMoves() {
         let relativeMoves;
         if (this.type === PAWN) {
-            let relativeMoves = this.getPawnRelativeMoves()
+            let relativeMoves = this.pawnPossibleMoves()
         } else if (this.type === ROOK) {
             relativeMoves = this.rookPossibleMoves()
         } else if (this.type === KNIGHT) {
@@ -57,12 +57,12 @@ class Piece {
     return filteredMoves;
     }
 
-     getPawnRelativeMoves() {
+     pawnPossibleMoves() {
     
     return [[1, 0]];
   }
 
-  getRookRelativeMoves() {
+ rookPossibleMoves() {
     let result = [];
     for (let i = 1; i < 8; i++) {
       result.push([i, 0]);
@@ -72,7 +72,7 @@ class Piece {
     }
     return result;
   }
-  getKnightRelativeMoves() {
+  knightpossibleMoves() {
     
     return [[1, 0]];
   }
