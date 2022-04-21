@@ -59,10 +59,21 @@ class Piece {
     }; 
    
      pawnPossibleMoves() {
+
+        
+             if(this.row===1){
+         return[[1, 0],[2,0]]
+     }else if(this.row===6){
+         return[[-1, 0],[-2,0]]
+      } else if (this.player===typeWhite){
     
-    return [[1, 0]];
-   
-  }
+    return [[1, 0]]
+}else if(this.player===typeBlack){
+    return [[-1,0]]
+
+
+}
+  };
 
  rookPossibleMoves() {
     let result = [];
@@ -75,26 +86,49 @@ class Piece {
     return result;
   }
   knightPossibleMoves() {
+let result=[];
+
+   
+    for (let j = 1; j <2; j++) {
+        let i=2
+        result.push([i, j]);
+        result.push([i, -j]);
+        result.push([j, i]);
+        result.push([j, -i]);
+        result.push([-i, -j]);
+        result.push([-i, j]);
+        result.push([-j, -i]);
+        result.push([-j, i]);
+        
+      
+      
     
-    return [[1, 0]];
+    }
+    console.log(result)
+
+
+return result;
+
+//       if(this.player===typeWhite){
+//     return [[2,-1],[2,1],[1,2],[1,-2]]
+// }else if(this.player===typeBlack){
+// }return[[-1,2],[-1,-2],[-2,1],[-2,-1]]
+
   }
  
 
     
 
     };
-    // class BoardData{
-    //     constructor(pieces){
-    //         this.pieces=pieces
-    //     }
-        // getPiece(i,j){
-        //     for (const piece of this.pieces){
-        //         if (this.row===i&&this.col===j)
-        //         return piece
-        //     }
-        // }
-    // }
-    // const boardData=new BoardData(getInitialBoard());
+    class BoardData{
+        constructor(pieces){
+            this.pieces=pieces
+        }
+        
+        
+    }
+    const hatihot=new BoardData(getInitialBoard());
+   
     
 
 
@@ -120,10 +154,14 @@ class Piece {
         if (chosenPiece){
 
        
-        let possibleMoves = chosenPiece.getPossibleMoves();
-              for (let possibleMove of possibleMoves)
+        let showPossibleMoves = chosenPiece.getPossibleMoves();
+        
+        
+              for (let possibleMove of showPossibleMoves){
               table.rows[possibleMove[0]].cells[possibleMove[1]].classList.add('possibleMoves');
-        console.log(chosenPiece)}
+        console.log(chosenPiece)}}  
+        
+        
 
         if (selectedCell) {
             selectedCell.classList.remove('selected')
