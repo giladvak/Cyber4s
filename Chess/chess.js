@@ -104,15 +104,11 @@ let result=[];
       
     
     }
-    console.log(result)
-
 
 return result;
 
-//       if(this.player===typeWhite){
-//     return [[2,-1],[2,1],[1,2],[1,-2]]
-// }else if(this.player===typeBlack){
-// }return[[-1,2],[-1,-2],[-2,1],[-2,-1]]
+  }
+  bishopPossibleMoves(){
 
   }
  
@@ -214,6 +210,24 @@ function createBoard() {
     const div = document.createElement('div');
     document.body.appendChild(div);
     div.className = 'outerBox'
+    const divNum=document.createElement('div')
+    const divLetters=document.createElement('div')
+    div.appendChild(divNum);
+    div.appendChild(divLetters);
+    divNum.className = 'numbers'
+    divLetters.className = 'letters'
+    let arr=['A','B','C','D','E','F','G','H']
+
+    for (let i = 1; i < 9; i++) {
+    const innerDivNumbers=document.createElement('div')
+    divNum.appendChild(innerDivNumbers);
+    innerDivNumbers.innerText=i
+    }
+    for (let i = 0; i < arr.length; i++) {
+        const innerDivLetters=document.createElement('div');
+        divLetters.appendChild(innerDivLetters);
+        innerDivLetters.innerText=arr[i]
+        }
      table = document.createElement('table');
     div.appendChild(table);
     table.classList.add('board');
