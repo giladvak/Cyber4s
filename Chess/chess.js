@@ -2,6 +2,7 @@ let typeBlack = 'black'
 let typeWhite = 'white'
 let selectedCell;
 let pieces = [];
+let boardData;
 let table;
 
 const PAWN = 'pawn';
@@ -151,13 +152,13 @@ return result;
 
     };
     class BoardData{
-        constructor(pieces){
-            this.pieces=pieces
+        constructor(hatihot){
+            this.hatihot=hatihot
         }
         
         
     }
-    const hatihot=new BoardData(getInitialBoard());
+    boardData=new BoardData(getInitialBoard());
    
     
 
@@ -176,7 +177,7 @@ return result;
 
 
         let chosenPiece;
-        for (let hatha of pieces) {
+        for (let hatha of boardData.hatihot) {
             if (row === hatha.row && col === hatha.col) {
                 chosenPiece = hatha
                 
@@ -299,13 +300,13 @@ function createBoard() {
         }
 
     }
-
-    pieces = getInitialBoard(0, typeWhite, 1);
+    
+   
     
 
 
 
-    for (let piece of pieces) {
+    for (let piece of boardData.hatihot) {
         getImg(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
 
         
