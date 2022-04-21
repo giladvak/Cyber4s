@@ -104,15 +104,49 @@ let result=[];
       
     
     }
-
+ 
 return result;
 
   }
   bishopPossibleMoves(){
+    let result = [];
+    let j=0
+    for (let i = 0; i < 8; i++&j++) {
+        result.push([i, j]);
+        result.push([i, -j]);
+        result.push([-i, -j]);
+        result.push([-i, j]);
+     
+       
+    } 
+    return result;
+    
+  };
+  queenPossibleMoves(){
+    let result = [];
+    let j=0
+    for (let i = 0; i < 8; i++&j++) {
+        result.push([i, j]);
+        result.push([i, -j]);
+        result.push([-i, -j]);
+        result.push([-i, j]);
+        
+       
+    } 
+    for (let i = 1; i < 8; i++) {
+        result.push([i, 0]);
+        result.push([-i, 0]);
+        result.push([0, i]);
+        result.push([0, -i]);
+      }
+    return result;
+   
+
+  };
+  kingPossibleMoves(){
+ return [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
 
   }
- 
-
     
 
     };
@@ -137,15 +171,17 @@ return result;
           }
           
 
-    //     console.log(e.currentTarget);
-    //   console.log(row,col)
+        console.log(e.currentTarget);
+      console.log(row,col)
 
 
         let chosenPiece;
         for (let hatha of pieces) {
             if (row === hatha.row && col === hatha.col) {
                 chosenPiece = hatha
+                
             }
+         
         };
         if (chosenPiece){
 
@@ -155,7 +191,9 @@ return result;
         
               for (let possibleMove of showPossibleMoves){
               table.rows[possibleMove[0]].cells[possibleMove[1]].classList.add('possibleMoves');
-        console.log(chosenPiece)}}  
+              
+        }}  console.log(chosenPiece)
+        
         
         
 
@@ -174,23 +212,18 @@ return result;
 
 
 
-function getInitialBoard(x, type, c) {
-    let result = [];
-    result.push(new Piece(x, 0, 'rook', type))
-    result.push(new Piece(x, 1, 'knight', type))
-    result.push(new Piece(x, 2, 'bishop', type))
-    result.push(new Piece(x, 3, 'king', type))
-    result.push(new Piece(x, 4, 'queen', type))
-    result.push(new Piece(x, 5, 'bishop', type))
-    result.push(new Piece(x, 6, 'knight', type))
-    result.push(new Piece(x, 7, 'rook', type))
-
-    for (let i = 0; i < 8; i++) {
-        result.push(new Piece(c, i, 'pawn', type))
-
-    }
-    return result;
-   
+function getInitialBoard() {
+    
+   let result=[];
+   let container=[ROOK,KNIGHT,BISHOP,KING,QUEEN,BISHOP,KNIGHT,ROOK];
+   for (let i = 0; i < container.length; i++) {
+    result.push(new Piece(0, i, container[i], typeBlack))
+    result.push(new Piece(7, i, container[i], typeWhite))
+    result.push(new Piece(6, i, PAWN, typeWhite))
+    result.push(new Piece(1, i, PAWN, typeBlack))
+   }
+   console.log(result)
+   return result;
 }
 
 
@@ -268,7 +301,7 @@ function createBoard() {
     }
 
     pieces = getInitialBoard(0, typeWhite, 1);
-    pieces.push(...getInitialBoard(7, typeBlack, 6));
+    
 
 
 
