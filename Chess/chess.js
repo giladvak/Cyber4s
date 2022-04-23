@@ -1,9 +1,10 @@
 let typeBlack = 'black'
 let typeWhite = 'white'
 let selectedCell;
-let pieces = [];
 let boardData;
 let table;
+
+
 
 const PAWN = 'pawn';
 const ROOK = 'rook';
@@ -24,6 +25,7 @@ class Piece {
     };
 
     getPossibleMoves() {
+        //apply on each hatha the currect possible move method and stores it in relativeMoves 
         let relativeMoves;
      
         if (this.type === PAWN) {
@@ -41,13 +43,15 @@ class Piece {
             relativeMoves = this.queenPossibleMoves()
         } else{ console.log('Unknown type')
     };
+    //runs over all relativeMoves and adds each relativeMove row&col to hatha row&col and pushes to array
     let absoluteMoves = [];
     for (let relativeMove of relativeMoves) {
       const absoluteRow = this.row + relativeMove[0];
       const absoluteCol = this.col + relativeMove[1];
       absoluteMoves.push([absoluteRow, absoluteCol]);
-     
+    
     }; 
+    //runs over absoluteMoves and pushes into array only moves in the board limits 
     let filteredMoves = [];
     for (let absoluteMove of absoluteMoves) {
       const absoluteRow = absoluteMove[0];
@@ -147,53 +151,82 @@ return result;
   kingPossibleMoves(){
  return [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
 
-  }
-    
-
+  } 
     };
+    
+    //creating BoardData class to act as manager
     class BoardData{
-        constructor(hatihot){
+        constructor(hatihot,){
             this.hatihot=hatihot
+            
+           
+            
         }
         
+     
+      
         
-    }
+        getPiece(shora,amoda){
+            for (let hatha of boardData.hatihot) {
+                if (shora === hatha.row && amoda === hatha.col) {
+                    console.log(hatha)
+                    
+                }
+        }
+    };
+        
+    };
+    //inserting getInitialBoard value into boardData.hatihot 
     boardData=new BoardData(getInitialBoard());
+    boardData.getPiece()
+  
    
-    
 
 
-    function onClickFunc(e,row,col,cell) { //defining func setting parameters
-                  
+    function onClickFunc(e,shora,amoda,cell) { //on click function
+       const  selectedCell = e.currentTarget;
+       const iconSelectedCell= selectedCell.firstElementChild
+       if (!iconSelectedCell) return;
+       
+  
+        //removing 'possibleMoves class from each cell
         for (let x = 0; x < 8; x++) {
             for (let y = 0; y < 8; y++) {
               table.rows[x].cells[y].classList.remove('possibleMoves');
+            
             }
           }
           
-
-        console.log(e.currentTarget);
-      console.log(row,col)
-
-
+         //prints the current target
+        // console.log(e.currentTarget);
+        //prints current row&column
+    //   console.log(shora,amoda)
+      
+        //goes over hatihot and gets a hatha if table row&col are the same as hatha object row&col
         let chosenPiece;
         for (let hatha of boardData.hatihot) {
-            if (row === hatha.row && col === hatha.col) {
+            if (shora === hatha.row && amoda === hatha.col) {
                 chosenPiece = hatha
                 
             }
          
         };
-        if (chosenPiece){
+        //if chosenPiece is true do the following
+        if (!chosenPiece) return
 
-       
+       //apply getPossibleMoves method on chosenPiece=(hatha in the condition of having a piece in it)
         let showPossibleMoves = chosenPiece.getPossibleMoves();
         
         
               for (let possibleMove of showPossibleMoves){
-              table.rows[possibleMove[0]].cells[possibleMove[1]].classList.add('possibleMoves');
+                const cell= table.rows[possibleMove[0]].cells[possibleMove[1]];
+               cell.classList.add('possibleMoves');
+               cell.addEventListener('click',(e)=>{movePieces(e,cell,shora,amoda,table,iconSelectedCell)
+                e.currentTarget.classList.remove("selected")
+                selectedCell.classList.remove('selected')
+            })
               
-        }}  console.log(chosenPiece)
+        } 
         
         
         
@@ -202,11 +235,26 @@ return result;
             selectedCell.classList.remove('selected')
         }
 
-        selectedCell = e.currentTarget;
+        
         cell.classList.add('selected')
+        
+        
+    };
+
+    function movePieces(e,cell,shora,amoda,table,iconSelectedCell){
+     const currentTarget=e.currentTarget
+     const icon=currentTarget.firstElementChild
+    
+    if(icon) return;
+    
+    
+    currentTarget.appendChild(iconSelectedCell);
+   
+       
+         
     };
   
-
+    
 
 
 
@@ -214,7 +262,7 @@ return result;
 
 
 function getInitialBoard() {
-    
+    //creating hatihot and putting them in the right place
    let result=[];
    let container=[ROOK,KNIGHT,BISHOP,KING,QUEEN,BISHOP,KNIGHT,ROOK];
    for (let i = 0; i < container.length; i++) {
@@ -230,7 +278,7 @@ function getInitialBoard() {
 
 
 
-
+//puts selected img in selected cell
 function getImg(cell, type, name) {
     const img = document.createElement('img');
     img.src = 'pawns/' + type + '/' + name + '.svg'
@@ -240,10 +288,11 @@ function getImg(cell, type, name) {
 
 
 function createBoard() {
-
+//creating outerbox div
     const div = document.createElement('div');
     document.body.appendChild(div);
     div.className = 'outerBox'
+    //Creating numbers and letter divs
     const divNum=document.createElement('div')
     const divLetters=document.createElement('div')
     div.appendChild(divNum);
@@ -251,34 +300,35 @@ function createBoard() {
     divNum.className = 'numbers'
     divLetters.className = 'letters'
     let arr=['A','B','C','D','E','F','G','H']
-
+     //inserting numbers
     for (let i = 1; i < 9; i++) {
     const innerDivNumbers=document.createElement('div')
     divNum.appendChild(innerDivNumbers);
     innerDivNumbers.innerText=i
-    }
+    }//inserting letters
     for (let i = 0; i < arr.length; i++) {
         const innerDivLetters=document.createElement('div');
         divLetters.appendChild(innerDivLetters);
         innerDivLetters.innerText=arr[i]
         }
+        //creating table 
      table = document.createElement('table');
     div.appendChild(table);
     table.classList.add('board');
+  //inserting tr
 
-
-    for (let i = 0; i < 8; i++) {
+    for (let shora = 0; shora < 8; shora++) {
         const row = document.createElement('tr');
         table.appendChild(row);
 
-
-        for (let j = 0; j < 8; j++) {
+//inserting td's inside each tr
+        for (let amoda = 0; amoda < 8; amoda++) {
             const cell = document.createElement('td');
             row.appendChild(cell)
-            cell.id = (i.toString() + ',' + j.toString())
+            cell.id = (shora.toString() + ',' + amoda.toString())
 
-
-            if (j % 2 === i % 2) {
+          //appending classes on condition 
+            if (amoda % 2 === shora % 2) {
                 cell.classList.add('white')
 
 
@@ -288,43 +338,40 @@ function createBoard() {
             }
             
 
-              //event explenation
-            //  function clickH(e){
-            //     onClickFunc(e,i,j,cell,table)
-            //  }
-            cell.addEventListener('click',(e)=> onClickFunc(e,i,j,cell)); //calling function insert values
+            //calling event listener on each cell 
+            cell.addEventListener('click',(e)=> onClickFunc(e,shora,amoda,cell)); 
 
-
+           
 
 
         }
 
-    }
+    };
     
    
-    
+       //calling getImg for each hatha
+    for (let hatha of boardData.hatihot) {
+        getImg(table.rows[hatha.row].cells[hatha.col], hatha.player, hatha.type);
+     
+       
+    } 
+  
 
 
 
-    for (let piece of boardData.hatihot) {
-        getImg(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
-
-        
-    }
-
-}
+};
 
 
-
-
-
-
-
+window.addEventListener('load',createBoard)
 
 
 
 
-window.addEventListener('load', createBoard);
+
+
+
+
+
 
 
 
