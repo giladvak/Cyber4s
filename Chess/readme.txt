@@ -1,1 +1,1 @@
-This is my Chessboard exercise, Enjoy!
+This is my chess project, enjoy!

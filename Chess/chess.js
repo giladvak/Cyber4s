@@ -1,9 +1,8 @@
 let typeBlack = 'black'
 let typeWhite = 'white'
-let selectedCell;
 let boardData;
 let table;
-
+let selectedCell;
 
 
 const PAWN = 'pawn';
@@ -64,7 +63,7 @@ class Piece {
     }; 
    
      pawnPossibleMoves() {
-
+     
         
              if(this.row===1){
          return[[1, 0],[2,0]]
@@ -78,6 +77,7 @@ class Piece {
 
 
 }
+        
   };
 
  rookPossibleMoves() {
@@ -162,17 +162,20 @@ return result;
            
             
         }
-        
+        isEmpty(){
+            selectedCell===undefined
+        }
      
       
         
         getPiece(shora,amoda){
+         
             for (let hatha of boardData.hatihot) {
                 if (shora === hatha.row && amoda === hatha.col) {
-                    console.log(hatha)
+                    return hatha
                     
                 }
-        }
+        } 
     };
         
     };
@@ -183,76 +186,100 @@ return result;
    
 
 
-    function onClickFunc(e,shora,amoda,cell) { //on click function
-       const  selectedCell = e.currentTarget;
-       const iconSelectedCell= selectedCell.firstElementChild
-       if (!iconSelectedCell) return;
-       
-  
-        //removing 'possibleMoves class from each cell
+    function onClickFunc(e,shora,amoda,cell) { 
         for (let x = 0; x < 8; x++) {
             for (let y = 0; y < 8; y++) {
               table.rows[x].cells[y].classList.remove('possibleMoves');
-            
+              table.rows[x].cells[y].classList.remove('selected');
+              table.rows[x].cells[y].classList.remove('enemy');
             }
           }
+       
+        // if (selectedCell) {
+        //     selectedCell.classList.remove('selected')
+        // }
+        //storing current clicked cell 
+         selectedCell = e.currentTarget;
+       //storing selected cells images
+       const imgSelectedCell= selectedCell.firstElementChild
+       
+       selectedCell.classList.add('selected');
+      //if no img doesnt enter function
+    //    if (!imgSelectedCell) return;
+    
+  
+        //removing 'possibleMoves class from each cell
+        // for (let x = 0; x < 8; x++) {
+        //     for (let y = 0; y < 8; y++) {
+        //       table.rows[x].cells[y].classList.remove('possibleMoves');
+            
+        //     }
+        //   }
+     
           
-         //prints the current target
-        // console.log(e.currentTarget);
-        //prints current row&column
-    //   console.log(shora,amoda)
+
+
+      
       
         //goes over hatihot and gets a hatha if table row&col are the same as hatha object row&col
-        let chosenPiece;
-        for (let hatha of boardData.hatihot) {
-            if (shora === hatha.row && amoda === hatha.col) {
-                chosenPiece = hatha
-                
-            }
-         
-        };
-        //if chosenPiece is true do the following
-        if (!chosenPiece) return
+        // let chosenPiece;
+        // for (let hatha of boardData.hatihot) {
+        //     if (shora === hatha.row && amoda === hatha.col) {
+        //         chosenPiece = hatha    
+        //     }   
+        // };
+       const chosenPiece= boardData.getPiece(shora,amoda);
+         //if chosen piece is true it enters the function
+        // if (!chosenPiece) return
 
        //apply getPossibleMoves method on chosenPiece=(hatha in the condition of having a piece in it)
-        let showPossibleMoves = chosenPiece.getPossibleMoves();
         
+      
         
-              for (let possibleMove of showPossibleMoves){
-                const cell= table.rows[possibleMove[0]].cells[possibleMove[1]];
-               cell.classList.add('possibleMoves');
-               cell.addEventListener('click',(e)=>{movePieces(e,cell,shora,amoda,table,iconSelectedCell)
-                e.currentTarget.classList.remove("selected")
-                selectedCell.classList.remove('selected')
-            })
-              
-        } 
-        
-        
-        
+        if(chosenPiece){
+          let showPossibleMoves = chosenPiece.getPossibleMoves();
+          for (let possibleMove of showPossibleMoves){
+            const cellPossibleMove= table.rows[possibleMove[0]].cells[possibleMove[1]];
+            
+        if (boardData.getPiece(possibleMove[0],possibleMove[1])===undefined){
 
-        if (selectedCell) {
-            selectedCell.classList.remove('selected')
+          cellPossibleMove.classList.add('possibleMoves');
         }
+        if(boardData.getPiece(possibleMove[0],possibleMove[1])!==undefined&&boardData.getPiece(possibleMove[0],possibleMove[1]).player!==boardData.getPiece(shora,amoda).player){
+
+            cellPossibleMove.classList.add('enemy');
+          
+        }
+         
+           cellPossibleMove.addEventListener('click',(e)=>{movePieces(e,cellPossibleMove,shora,amoda,table,imgSelectedCell,selectedCell)
+              
+        });
+          
+          } 
+        }
+   
+       
+        
 
         
-        cell.classList.add('selected')
         
-        
-    };
+    }
 
-    function movePieces(e,cell,shora,amoda,table,iconSelectedCell){
+    function movePieces(e,cellPossibleMove,shora,amoda,table,imgSelectedCell){
+        // marked possible moves
      const currentTarget=e.currentTarget
+     //possible moves with img
      const icon=currentTarget.firstElementChild
-    
+     
+    //if the cell is full stop
     if(icon) return;
     
-    
-    currentTarget.appendChild(iconSelectedCell);
+    //prints inside selected cell the img of the previous selected cell
+    currentTarget.appendChild(imgSelectedCell);
    
        
          
-    };
+    }
   
     
 
@@ -363,7 +390,6 @@ function createBoard() {
 
 
 window.addEventListener('load',createBoard)
-
 
 
 
