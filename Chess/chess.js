@@ -15,223 +15,24 @@ const QUEEN = 'queen';
 
 
 
-class Piece {
-  constructor(row, col, type, player) {
-    this.row = row
-    this.col = col
-    this.type = type
-    this.player = player
-  };
-
-  getPossibleMoves(boardData) {
 
 
-    let moves;
-    if (this.type === PAWN) {
-      moves = this.pawnPossibleMoves(boardData)
-
-    } else if (this.type === ROOK) {
-      moves = this.rookPossibleMoves(boardData)
-    } else if (this.type === KNIGHT) {
-      moves = this.knightPossibleMoves(boardData)
-    } else if (this.type === BISHOP) {
-      moves = this.bishopPossibleMoves(boardData)
-    } else if (this.type === KING) {
-      moves = this.kingPossibleMoves(boardData)
-    } else if (this.type === QUEEN) {
-      moves = this.queenPossibleMoves(boardData)
-    } else {
-      console.log('Unknown type')
-
-    };
-
-
-    let filteredMoves = [];
-    for (let absoluteMove of moves) {
-      const absoluteRow = absoluteMove[0];
-      const absoluteCol = absoluteMove[1];
-      if (absoluteRow >= 0 && absoluteRow <= 7 && absoluteCol >= 0 && absoluteCol <= 7) {
-        filteredMoves.push(absoluteMove);
-      }
-    } console.log(filteredMoves)
-    return filteredMoves;
-  };
-
-  pawnPossibleMoves(boardData) {
-    let result = [];
-    let direction = 1;
-
-    if (this.player === typeBlack) {
-      direction = -1
-    }
-    let position = [this.row + direction, this.col]
-    if (boardData.isEmpty(position[0], position[1])) {
-      result.push(position);
-    }
-
-    position = [this.row + direction, this.col + direction]
-    if (boardData.isPlayer(position[0], position[1], this.getOpponent())) {
-      result.push(position)
-    }
-
-    position = [this.row + direction, this.col - direction]
-    if (boardData.isPlayer(position[0], position[1], this.getOpponent())) {
-      result.push(position)
-    }
-    return (result);
-  }
-
-
-
-
-  rookPossibleMoves(boardData) {
-    let result = [];
-
-    result = result.concat(this.getMovesInDirection(-1, 0, boardData))
-    result = result.concat(this.getMovesInDirection(1, 0, boardData))
-    result = result.concat(this.getMovesInDirection(0, -1, boardData))
-    result = result.concat(this.getMovesInDirection(0, 1, boardData))
-
-    return result;
-  }
-  getMovesInDirection(directionRow, directionCol, boardData) {
-    let result = [];
-    for (let i = 1; i < 8; i++) {
-      let row = this.row + directionRow * i;
-      let col = this.col + directionCol * i;
-      if (boardData.isEmpty(row, col)) {
-        result.push([row, col]);
-      } else if (boardData.isPlayer(row, col, this.getOpponent())) {
-        result.push([row,col])
-        return result;
-      } else if (boardData.isPlayer(row, col, this.player)) {
-        return result;
-      }
-    }
-    return result;
-  }
-  knightPossibleMoves() {
-    let result = [];
-    const relativeMoves = [[2, 1], [2, -1], [-2, 1], [-2, -1], [-1, 2], [1, 2], [-1, -2], [1, -2]];
-    for (let relativeMove of relativeMoves) {
-      let row = this.row + relativeMove[0];
-      let col = this.col + relativeMove[1];
-      
-      if (!boardData.isPlayer(row, col, this.player)) {
-        result.push([row, col]);
-      }
-    }
-    return result;
-
-  }
-  bishopPossibleMoves() {
-    let result = [];
-    result = result.concat(this.getMovesInDirection(-1, -1, boardData));
-    result = result.concat(this.getMovesInDirection(-1, 1, boardData));
-    result = result.concat(this.getMovesInDirection(1, -1, boardData));
-    result = result.concat(this.getMovesInDirection(1, 1, boardData));
-    return result;
-
-  };
-  queenPossibleMoves() {
-    let result = this.bishopPossibleMoves(boardData);
-    result = result.concat(this.rookPossibleMoves(boardData));
-    return result;
-
-
-
-  };
-  kingPossibleMoves() {
-    let result = [];
-    const relativeMoves = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
-    for (let relativeMove of relativeMoves) {
-      let row = this.row + relativeMove[0];
-      let col = this.col + relativeMove[1];
-      if (!boardData.isPlayer(row, col, this.player)) {
-        result.push([row, col]);
-      }
-    }
-    return result;
-
-  }
-
-
-  getOpponent() {
-    if (this.player === typeWhite) {
-      return typeBlack;
-    } else
-      return typeWhite;
-
-  }
-}
-
-
-class BoardData {
-  constructor(hatihot,) {
-    this.hatihot = hatihot
-
-
-
-  }
-
-
-
-   removePiece(row, col) {
-
-    for (let i = 0; i < boardData.hatihot.length; i++) {
-      const piece = this.hatihot[i];
-      if (piece.row === row && piece.col === col) {
-
-        this.hatihot.splice(i, 1);
-      }
-    }
-  } 
-  isEmpty(row, col) {
-    return this.getPiece(row, col) === undefined;
-  }
-
-  isPlayer(row, col, player) {
-    const piece = this.getPiece(row, col);
-    return piece !== undefined && piece.player === player
-  }
-
-
-  getPiece(shora, amoda) {
-
-    for (let hatha of boardData.hatihot) {
-      if (shora === hatha.row && amoda === hatha.col) {
-        return hatha
-
-      }
-    }
-  };
-
-};
-
-boardData = new BoardData(getInitialBoard());
+boardData = new BoardData(getInitialBoard(),typeWhite);
 boardData.getPiece()
 
 
 
 
-function onClickFunc(e, shora, amoda, cell) {
-  for (let x = 0; x < 8; x++) {
-    for (let y = 0; y < 8; y++) {
-      table.rows[x].cells[y].classList.remove('possibleMoves');
-      table.rows[x].cells[y].classList.remove('selected');
-      table.rows[x].cells[y].classList.remove('enemy');
-    }
-  }
+function onClickFunc(e, shora, amoda) {
 
-
+ boardData.clearClasses(shora,amoda)
   selectedCell = e.currentTarget;
 
   const imgSelectedCell = selectedCell.firstElementChild
-
+ 
 
 
   const chosenPiece = boardData.getPiece(shora, amoda)
-
   if (chosenPiece) {
     selectedCell.classList.add('selected');
 
@@ -266,7 +67,7 @@ function onClickFunc(e, shora, amoda, cell) {
 }
 
 
-function movePieces(e, cellPossibleMove, shora, amoda, table, imgSelectedCell,selectedCell,possibleMove) {
+function movePieces(e,shora, amoda,imgSelectedCell,selectedCell,possibleMove) {
   
  let chosenPiece= boardData.getPiece(shora, amoda)
 
@@ -288,6 +89,7 @@ let secondPlayer=  boardData.getPiece(possibleMove[0],possibleMove[1])
    chosenPiece.col=possibleMove[1]
    
 
+
    
   }
 
@@ -295,8 +97,13 @@ let secondPlayer=  boardData.getPiece(possibleMove[0],possibleMove[1])
 
 
   selectedCell.appendChild(imgSelectedCell);
-  
-
+  console.log(boardData.getPiece(shora,amoda))
+  console.log(boardData)
+  if(boardData.currentPlayer===typeWhite){
+    boardData.currentPlayer=typeBlack
+  }else{
+    boardData.currentPlayer=typeWhite
+  }
 }
 
 
@@ -307,7 +114,7 @@ let secondPlayer=  boardData.getPiece(possibleMove[0],possibleMove[1])
 
 
 function getInitialBoard() {
-  //creating hatihot and putting them in the right place
+
   let result = [];
   let container = [ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK];
   for (let i = 0; i < container.length; i++) {
@@ -316,11 +123,11 @@ function getInitialBoard() {
     result.push(new Piece(1, i, PAWN, typeWhite))
     result.push(new Piece(6, i, PAWN, typeBlack))
   }
-  console.log(result)
+  
   return result;
 }
 
-//puts selected img in selected cell
+
 function getImg(cell, type, name) {
   const img = document.createElement('img');
   img.src = 'pawns/' + type + '/' + name + '.svg'
@@ -330,11 +137,11 @@ function getImg(cell, type, name) {
 
 
 function createBoard() {
-  //creating outerbox div
+  
   const div = document.createElement('div');
   document.body.appendChild(div);
   div.className = 'outerBox'
-  //Creating numbers and letter divs
+ 
   const divNum = document.createElement('div')
   const divLetters = document.createElement('div')
   div.appendChild(divNum);
