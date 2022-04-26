@@ -102,6 +102,7 @@ class Piece {
       if (boardData.isEmpty(row, col)) {
         result.push([row, col]);
       } else if (boardData.isPlayer(row, col, this.getOpponent())) {
+        result.push([row,col])
         return result;
       } else if (boardData.isPlayer(row, col, this.player)) {
         return result;
@@ -115,6 +116,7 @@ class Piece {
     for (let relativeMove of relativeMoves) {
       let row = this.row + relativeMove[0];
       let col = this.col + relativeMove[1];
+      
       if (!boardData.isPlayer(row, col, this.player)) {
         result.push([row, col]);
       }
@@ -174,16 +176,16 @@ class BoardData {
 
 
 
-  //  removePiece(row, col) {
+   removePiece(row, col) {
 
-  //   for (let i = 0; i < boardData.hatihot.length; i++) {
-  //     const piece = this.hatihot[i];
-  //     if (piece.row === row && piece.col === col) {
+    for (let i = 0; i < boardData.hatihot.length; i++) {
+      const piece = this.hatihot[i];
+      if (piece.row === row && piece.col === col) {
 
-  //       this.hatihot.splice(i, 1);
-  //     }
-  //   }
-  // }
+        this.hatihot.splice(i, 1);
+      }
+    }
+  } 
   isEmpty(row, col) {
     return this.getPiece(row, col) === undefined;
   }
@@ -231,28 +233,25 @@ function onClickFunc(e, shora, amoda, cell) {
   const chosenPiece = boardData.getPiece(shora, amoda)
 
   if (chosenPiece) {
-    if (selectedCell !== undefined) {
-
-      selectedCell.classList.add('selected');
-    }
+    selectedCell.classList.add('selected');
 
     let showPossibleMoves = chosenPiece.getPossibleMoves(boardData);
 
     for (let possibleMove of showPossibleMoves) {
       const cellPossibleMove = table.rows[possibleMove[0]].cells[possibleMove[1]];
-
-
-      if (boardData.getPiece(possibleMove[0], possibleMove[1]) === undefined) {
+     
+      const possiblePiece = boardData.getPiece(possibleMove[0], possibleMove[1]);
+      
+      if (possiblePiece === undefined) {
 
         cellPossibleMove.classList.add('possibleMoves');
       }
-      if (boardData.getPiece(possibleMove[0], possibleMove[1]) !== undefined && boardData.getPiece(possibleMove[0], possibleMove[1]).player !== boardData.getPiece(shora, amoda).player) {
+      if (possiblePiece !== undefined && possiblePiece.player !== boardData.getPiece(shora, amoda).player) {
 
         cellPossibleMove.classList.add('enemy');
       }
-
-      cellPossibleMove.addEventListener('click', (e) => {
-        movePieces(e, cellPossibleMove, shora, amoda, table, imgSelectedCell, selectedCell)
+      
+      cellPossibleMove.addEventListener('click', (e) => { movePieces(e, cellPossibleMove, shora, amoda, table, imgSelectedCell, selectedCell,possibleMove)
 
       });
 
@@ -267,23 +266,36 @@ function onClickFunc(e, shora, amoda, cell) {
 }
 
 
-function movePieces(e, cellPossibleMove, shora, amoda, table, imgSelectedCell) {
+function movePieces(e, cellPossibleMove, shora, amoda, table, imgSelectedCell,selectedCell,possibleMove) {
+  
+ let chosenPiece= boardData.getPiece(shora, amoda)
 
-  let piece = boardData.getPiece(shora, amoda)
+   selectedCell = e.currentTarget
+  
+  let updateRow = (selectedCell.id[0])*1
+  let updateCol = (selectedCell.id[2])*1
+  if(chosenPiece===undefined) return;
+  chosenPiece.row = updateRow;
+  chosenPiece.col = updateCol;
+let secondPlayer=  boardData.getPiece(possibleMove[0],possibleMove[1])
+  
+  const icon = selectedCell.firstElementChild
+  if(secondPlayer.player!==chosenPiece.player){
+   boardData.removePiece(possibleMove[0],possibleMove[1])
+   selectedCell.firstElementChild.remove()
+   selectedCell.appendChild(imgSelectedCell)
+   chosenPiece.row=possibleMove[0]
+   chosenPiece.col=possibleMove[1]
+   
 
-  const currentTarget = e.currentTarget
-  let updateRow = parseInt(currentTarget.id[0])
-  let updateCol = parseInt(currentTarget.id[2])
-  piece.row = updateRow;
-  piece.col = updateCol;
-  const icon = currentTarget.firstElementChild
+   
+  }
 
   if (icon) return;
 
 
-  currentTarget.appendChild(imgSelectedCell);
-
-
+  selectedCell.appendChild(imgSelectedCell);
+  
 
 }
 
