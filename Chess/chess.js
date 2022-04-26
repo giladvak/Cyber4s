@@ -23,7 +23,7 @@ boardData.getPiece()
 
 
 
-function onClickFunc(e, shora, amoda) {
+function onClickFunc(e, shora, amoda, cell) {
 
  boardData.clearClasses(shora,amoda)
   selectedCell = e.currentTarget;
@@ -67,7 +67,7 @@ function onClickFunc(e, shora, amoda) {
 }
 
 
-function movePieces(e,shora, amoda,imgSelectedCell,selectedCell,possibleMove) {
+function movePieces(e, cellPossibleMove, shora, amoda, table, imgSelectedCell,selectedCell,possibleMove) {
   
  let chosenPiece= boardData.getPiece(shora, amoda)
 
