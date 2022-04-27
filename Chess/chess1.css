@@ -13,7 +13,7 @@ body{
 }
 
 .board {
-    
+    position: relative;
     margin:0;
     width: min(75vw, 75vh);
     height: min(75vw, 75vh);
@@ -100,5 +100,15 @@ td{
   
 .enemy{
     background-color: red;
+}
+.alertMassage{
+position: absolute;
+align-items: center;
+text-align: center;
+background-color: yellow;
+width: 50vw;
+height: 20vh;
+font-size: 2rem;
+border-radius: 50px;
 }
 

@@ -16,16 +16,6 @@ class BoardData {
   }
 
 
-  removePiece(row, col) {
-
-    for (let i = 0; i < boardData.pieces.length; i++) {
-      const piece = this.pieces[i];
-      if (piece.row === row && piece.col === col) {
-        piece.
-          this.pieces.splice(i, 1);
-      }
-    }
-  }
   isEmpty(row, col) {
     return this.getPiece(row, col) === undefined;
   }
@@ -38,7 +28,7 @@ class BoardData {
 
   getPiece(row, col) {
     let index = this.getPieceIndex(row, col)
-    if (index != -1)
+    if (index !== -1)
       return this.pieces[index]
   }
 
@@ -53,22 +43,28 @@ class BoardData {
 
   setPieceLocation(row, col, index) {
     let secondIndex = this.getPieceIndex(row, col)
-    let secondPlayer = secondIndex != -1 ? this.pieces[secondIndex] : undefined
+    let secondPlayer = secondIndex !== -1 ? this.pieces[secondIndex] : undefined
     let currentPiece = this.pieces[index]
 
     if (secondPlayer) {
-      secondPlayer.deletePiece()
+     
+    secondPlayer.deletePiece()
+     this.removedPiece(secondPlayer)
       this.pieces.splice(secondIndex, 1)
     }
     currentPiece.moveToLocation(row, col)
 
   }
-   reloadTable() {
-
-    document.body.querySelector('.outerBox').remove()
-    createBoard()
-  
+  removedPiece(secondPlayer){
+   secondPlayer
+if(secondPlayer.type===KING){
+  showAlert()
+  boardData1.pieces
+}
+console.log(boardData1)
   }
+ 
+
   
 
 }

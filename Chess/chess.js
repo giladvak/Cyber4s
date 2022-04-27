@@ -19,7 +19,6 @@ function onClickFunc(row, col) {
   boardData.clearClasses(row, col)
 
   selectedCell = table.rows[row].cells[col];
-  const imgSelectedCell = selectedCell.firstElementChild
   const chosenPiece = boardData.getPiece(row, col)
 
   if (chosenPiece) {
@@ -47,11 +46,12 @@ function onClickFunc(row, col) {
 
     }
   }
-
-
-
-
-
+}
+function showAlert(){
+let alert=document.createElement('div');
+document.body.appendChild(alert)
+alert.classList.add('alertMassage')
+alert.innerText='Game over!'
 
 }
 
@@ -66,7 +66,6 @@ function reloadTable() {
 function movePieces(e, row, col) {
 
   let index = boardData.getPieceIndex(row, col)
-
   let selectedCell = e.currentTarget
   let updateRow = Number(selectedCell.id[0])
   let updateCol = Number(selectedCell.id[2])
@@ -148,8 +147,7 @@ function createBoard() {
       cellElement.addEventListener('click', () => onClickFunc(row, col))
     };
   }
-  boardData = boardData || new BoardData(getInitialBoard(), typeWhite);
-
+  boardData = boardData || new BoardData(getInitialBoard(),typeWhite);
   for (let piece of boardData.pieces) {
     piece.img = getImg(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
   }
@@ -158,7 +156,6 @@ function createBoard() {
 
 
 window.addEventListener('load', createBoard)
-
 
 
 
