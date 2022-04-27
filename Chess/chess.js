@@ -128,7 +128,7 @@ function createBoard() {
     const innerDivNumbers = document.createElement('div')
     divNum.appendChild(innerDivNumbers);
     innerDivNumbers.innerText = i
-  }//inserting letters
+  }//insert letters
   for (let i = 0; i < arr.length; i++) {
     const innerDivLetters = document.createElement('div');
     divLetters.appendChild(innerDivLetters);
