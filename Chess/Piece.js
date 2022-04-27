@@ -159,6 +159,6 @@ class Piece {
   moveToLocation(row,col){
     this.row = row
     this.col = col
-    table.rows[row].cells[col].appendChild(this.img)
+    // table.rows[row].cells[col].appendChild(this.img)
   }
 }

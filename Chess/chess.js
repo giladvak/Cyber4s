@@ -3,6 +3,7 @@ let typeWhite = 'white'
 let boardData;
 let table;
 let selectedCell;
+let chckmate = false
 
 
 const PAWN = 'pawn';
@@ -47,17 +48,21 @@ function onClickFunc(row, col) {
     }
   }
 }
-function showAlert(){
-let alert=document.createElement('div');
-document.body.appendChild(alert)
-alert.classList.add('alertMassage')
-alert.innerText='Game over!'
+function showAlert(secondPlayer) {
+  let alert = document.createElement('div');
+  document.body.appendChild(alert)
+  alert.classList.add('alertMassage')
+
+  let winner = secondPlayer.player === typeBlack ? typeWhite : typeBlack
+
+  alert.innerText = `Game over ${winner.charAt(0).toUpperCase() + winner.slice(1)} Won!`
+  chckmate = true
 
 }
 
 function reloadTable() {
 
-  document.body.querySelector('.outerBox').remove()
+  document.querySelector('.outerBox').remove()
   createBoard()
 
 }
@@ -144,10 +149,11 @@ function createBoard() {
       } else {
         cellElement.classList.add('black')
       };
-      cellElement.addEventListener('click', () => onClickFunc(row, col))
+      if (!chckmate)
+        cellElement.addEventListener('click', () => onClickFunc(row, col))
     };
   }
-  boardData = boardData || new BoardData(getInitialBoard(),typeWhite);
+  boardData = boardData || new BoardData(getInitialBoard(), typeWhite);
   for (let piece of boardData.pieces) {
     piece.img = getImg(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
   }
@@ -156,7 +162,6 @@ function createBoard() {
 
 
 window.addEventListener('load', createBoard)
-
 
 
 

@@ -53,18 +53,19 @@ class BoardData {
       this.pieces.splice(secondIndex, 1)
     }
     currentPiece.moveToLocation(row, col)
-
   }
+
   removedPiece(secondPlayer){
-   secondPlayer
 if(secondPlayer.type===KING){
-  showAlert()
-  boardData1.pieces
+  showAlert(secondPlayer) 
+  
+ 
 }
-console.log(boardData1)
   }
  
-
   
+
+ 
+
 
 }

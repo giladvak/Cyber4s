@@ -110,5 +110,6 @@ width: 50vw;
 height: 20vh;
 font-size: 2rem;
 border-radius: 50px;
+z-index: 1;
 }
 
