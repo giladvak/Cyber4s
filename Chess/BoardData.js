@@ -21,8 +21,8 @@ class BoardData {
     for (let i = 0; i < boardData.pieces.length; i++) {
       const piece = this.pieces[i];
       if (piece.row === row && piece.col === col) {
-
-        this.pieces.splice(i, 1);
+        piece.
+          this.pieces.splice(i, 1);
       }
     }
   }
@@ -37,13 +37,38 @@ class BoardData {
 
 
   getPiece(row, col) {
+    let index = this.getPieceIndex(row, col)
+    if (index != -1)
+      return this.pieces[index]
+  }
 
-    for (let piece of boardData.pieces) {
-      if (row === piece.row && col === piece.col) {
-        return piece
-
+  getPieceIndex(row, col) {
+    for (let i = 0; i < this.pieces.length; i++) {
+      if (row === this.pieces[i].row && col === this.pieces[i].col) {
+        return i
       }
     }
-  };
+    return -1
+  }
 
-};
+  setPieceLocation(row, col, index) {
+    let secondIndex = this.getPieceIndex(row, col)
+    let secondPlayer = secondIndex != -1 ? this.pieces[secondIndex] : undefined
+    let currentPiece = this.pieces[index]
+
+    if (secondPlayer) {
+      secondPlayer.deletePiece()
+      this.pieces.splice(secondIndex, 1)
+    }
+    currentPiece.moveToLocation(row, col)
+
+  }
+   reloadTable() {
+
+    document.body.querySelector('.outerBox').remove()
+    createBoard()
+  
+  }
+  
+
+}

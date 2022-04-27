@@ -15,7 +15,7 @@ const container = [ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK];
 
 
 function onClickFunc(row, col) {
-
+  reloadTable()
   boardData.clearClasses(row, col)
 
   selectedCell = table.rows[row].cells[col];
@@ -40,7 +40,8 @@ function onClickFunc(row, col) {
         cellPossibleMove.classList.add('enemy');
       }
 
-      cellPossibleMove.addEventListener('click', (e) => {movePieces(e,row, col, imgSelectedCell, possibleMove)
+      cellPossibleMove.addEventListener('click', (e) => {
+        movePieces(e, row, col)
 
       });
 
@@ -54,42 +55,25 @@ function onClickFunc(row, col) {
 
 }
 
+function reloadTable() {
 
-function movePieces(e, row, col, imgSelectedCell, possibleMove) {
+  document.body.querySelector('.outerBox').remove()
+  createBoard()
 
-  let chosenPiece = boardData.getPiece(row, col)
+}
+
+
+function movePieces(e, row, col) {
+
+  let index = boardData.getPieceIndex(row, col)
+
   let selectedCell = e.currentTarget
-  let updateRow = (selectedCell.id[0]) * 1
-  let updateCol = (selectedCell.id[2]) * 1
-  const icon = selectedCell.firstElementChild
-  
-  if (chosenPiece === undefined) return;
-  chosenPiece.row = updateRow;
-  chosenPiece.col = updateCol;
+  let updateRow = Number(selectedCell.id[0])
+  let updateCol = Number(selectedCell.id[2])
+  boardData.setPieceLocation(updateRow, updateCol, index)
 
-  let secondPlayer = boardData.getPiece(possibleMove[0], possibleMove[1])
-
-  
-  if (secondPlayer.player !== chosenPiece.player) {
-    boardData.removePiece(possibleMove[0], possibleMove[1])
-    
-    // chosenPiece.row = possibleMove[0]
-    // chosenPiece.col = possibleMove[1]
-    // selectedCell.appendChild(imgSelectedCell)
-    // selectedCell.firstElementChild.remove()
-  }
-
-  if (icon) return;
-
-
-  selectedCell.appendChild(imgSelectedCell);
-  if (boardData.currentPlayer === typeWhite) {
-    boardData.currentPlayer = typeBlack
-  } else {
-    boardData.currentPlayer = typeWhite
-  } console.log(selectedCell)
-  console.log(chosenPiece)
-  console.log(boardData)
+  boardData.currentPlayer = boardData.currentPlayer === typeWhite ? typeBlack : typeWhite
+  reloadTable()
 }
 
 
@@ -118,6 +102,7 @@ function getImg(cell, type, name) {
   img.src = 'pawns/' + type + '/' + name + '.svg'
   img.classList.add('tool')
   cell.appendChild(img)
+  return img
 }
 
 
@@ -162,10 +147,11 @@ function createBoard() {
       };
       cellElement.addEventListener('click', () => onClickFunc(row, col))
     };
-  } boardData = new BoardData(getInitialBoard(), typeWhite);
+  }
+  boardData = boardData || new BoardData(getInitialBoard(), typeWhite);
 
   for (let piece of boardData.pieces) {
-    getImg(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
+    piece.img = getImg(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
   }
 
 }

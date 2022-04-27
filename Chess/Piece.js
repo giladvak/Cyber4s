@@ -5,7 +5,7 @@ class Piece {
     this.col = col
     this.type = type
     this.player = player
-  };
+  }
 
   getPossibleMoves(boardData) {
 
@@ -148,5 +148,17 @@ class Piece {
     } else
       return typeWhite;
 
+  }
+
+  deletePiece(){
+    this.row = -1;
+    this.col = -1;
+    this.img.remove();
+  }
+
+  moveToLocation(row,col){
+    this.row = row
+    this.col = col
+    table.rows[row].cells[col].appendChild(this.img)
   }
 }
