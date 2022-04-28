@@ -3,7 +3,7 @@ let typeWhite = 'white'
 let boardData;
 let table;
 let selectedCell;
-let chckmate = false
+let checkmate = false
 
 
 const PAWN = 'pawn';
@@ -30,7 +30,6 @@ function onClickFunc(row, col) {
     for (let possibleMove of showPossibleMoves) {
       const cellPossibleMove = table.rows[possibleMove[0]].cells[possibleMove[1]];
       const possiblePiece = boardData.getPiece(possibleMove[0], possibleMove[1]);
-
       if (possiblePiece === undefined) {
 
         cellPossibleMove.classList.add('possibleMoves');
@@ -56,7 +55,7 @@ function showAlert(secondPlayer) {
   let winner = secondPlayer.player === typeBlack ? typeWhite : typeBlack
 
   alert.innerText = `Game over ${winner.charAt(0).toUpperCase() + winner.slice(1)} Won!`
-  chckmate = true
+  checkmate = true
 
 }
 
@@ -109,7 +108,6 @@ function getImg(cell, type, name) {
   return img
 }
 
-
 function createBoard() {
 
   const div = document.createElement('div');
@@ -140,7 +138,6 @@ function createBoard() {
 
   for (let row = 0; row < 8; row++) {
     const rowElement = table.insertRow()
-
     for (let col = 0; col < 8; col++) {
       const cellElement = rowElement.insertCell()
       cellElement.id = (row.toString() + ',' + col.toString())
@@ -149,7 +146,7 @@ function createBoard() {
       } else {
         cellElement.classList.add('black')
       };
-      if (!chckmate)
+      if (!checkmate)
         cellElement.addEventListener('click', () => onClickFunc(row, col))
     };
   }

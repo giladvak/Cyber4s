@@ -15,7 +15,6 @@ class Piece {
     let moves;
     if (this.type === PAWN) {
       moves = this.pawnPossibleMoves(boardData)
-
     } else if (this.type === ROOK) {
       moves = this.rookPossibleMoves(boardData)
     } else if (this.type === KNIGHT) {
@@ -33,11 +32,11 @@ class Piece {
 
 
     let filteredMoves = [];
-    for (let absoluteMove of moves) {
-      const absoluteRow = absoluteMove[0];
-      const absoluteCol = absoluteMove[1];
+    for (let move of moves) {
+      const absoluteRow = move[0];
+      const absoluteCol = move[1];
       if (absoluteRow >= 0 && absoluteRow <= 7 && absoluteCol >= 0 && absoluteCol <= 7) {
-        filteredMoves.push(absoluteMove);
+        filteredMoves.push(move);
       }
     }
     return filteredMoves;
